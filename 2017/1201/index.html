@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="App">
+    <head>
+        <meta charset="utf-8" />
+        <title>駅情報を地図にマッピングするサンプル</title>
+      <style>
+        .row {
+          margin-top: 4px;
+        }
+      </style>
+      <!-- jQuery -->
+      <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+      <!-- -->
+      <link class="css" rel="stylesheet" type="text/css" href="GUI/expGuiStation/expCss/expGuiStation.css">
+      <script type="text/javascript" src="GUI/expGuiStation/expGuiStation.js?key=<アクセスキーを入力してください>" charset="UTF-8"></script>
+      <!-- leaflet -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <!-- AngularJS -->
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+      <!-- Bootstrap JS -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+      <!-- My Application JS -->
+      <script src="app.js"></script>
+    </head>
+    <body ng-controller="AppController">
+      <!-- ナビゲーションバー --> 
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">駅情報を地図にマッピングするサンプル</a>
+          </div>
+        </div>
+      </nav>
+      <!-- contents -->
+      <div style="margin-top:60px;"></div>
+      <div class="container theme-showcase" role="main">
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-success" role="alert">
+              <p>
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                指定した駅の情報を地図上にマッピングします。
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 駅名リストと地図の表示領域 -->
+        <div class="row">
+          <!-- 駅名リストの表示領域 -->
+          <div class="col-md-4">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modal1" style="width:100%;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;駅を追加</button>
+            <ul ng-repeat="s in stations" style="margin-top: 8px;">
+              <li>
+              <button class="btn btn-warning"><span class="glyphicon glyphicon-trash" aria-hidden="true" ng-click="remove(s)"></button>&nbsp;<button class="btn btn-default" data-toggle="button" ng-click="toggle(s)">{{s.name}}</button><!--({{s.lati}},&nbsp;{{s.longi}})-->
+            </ul>
+          </div>
+          <!-- leafletによる地図 -->
+          <div class="col-md-8">
+            <div id="mapid" style="width: 100%; height: 600px;"></div>
+          </div>
+        </div>
+      </div>
+      <!-- モーダルダイアログ表示用 -->
+      <div id="modal1" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true">駅名の選択</h4>
+            </div>
+            <div class="modal-body">
+              <div id="station1" style="width:100%;"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" ng-click="closeDialog()">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>
+
